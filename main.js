@@ -27,12 +27,13 @@ function censura(paroleProibite, testoSostitutivo, testoIniziale) {
       var tuttaMinuscola = paroleProibite[i].toLowerCase();
       var conPrimaMaiuscola = conPrimaLetteraMaiuscola(paroleProibite[i]);
 
-      testoIniziale = sostituisciCon(testoSostitutivo, paroleProibite[i], testoIniziale);
-      testoIniziale = sostituisciCon(testoSostitutivo, tuttaMinuscola, testoIniziale);
-      testoIniziale = sostituisciCon(testoSostitutivo, conPrimaMaiuscola, testoIniziale);
+      testoIniziale = testoIniziale.replace(paroleProibite[i], testoSostitutivo);
+      testoIniziale = testoIniziale.replace(tuttaMinuscola, testoSostitutivo);
+      testoIniziale = testoIniziale.replace(conPrimaMaiuscola, testoSostitutivo);
     }
   }
 
+  console.log('testo censurato ok');
   return testoIniziale;
 }
 
@@ -45,18 +46,6 @@ function esisteRegolareOConPrimaMaiuscolaMinuscola(parola, testo) {
     return true;
   }
   return false;
-}
-
-function sostituisciCon(testoCensura, parolaProibita, testo) {
-
-  var testoFinale = testo;
-
-  if (testoFinale.indexOf(parolaProibita) != -1) {
-    testoFinale = testoFinale.replace(parolaProibita, testoCensura);
-  }
-
-  return testoFinale;
-
 }
 
 function conPrimaLetteraMaiuscola(previousWord) {
