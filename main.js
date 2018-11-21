@@ -15,25 +15,31 @@ document.writeln('Le parole rimosse saranno: ' + arrayParoleDaCensurare + '<br><
 
 testoLoremDaCensurare = censura(arrayParoleDaCensurare, 'xxx', testoLoremDaCensurare);
 
-document.writeln('Il testo censurato è:<br>' + testoLoremDaCensurare);
-
-// FUNZIONI
+//FUNZIONI
 
 function censura(paroleProibite, testoSostitutivo, testoIniziale) {
+  var contatoreCensurate = 0;
   for (var i = 0; i < paroleProibite.length; i++) {
-
     while (esisteRegolareOConPrimaMaiuscolaMinuscola(paroleProibite[i], testoIniziale)) {
 
       var tuttaMinuscola = paroleProibite[i].toLowerCase();
       var conPrimaMaiuscola = conPrimaLetteraMaiuscola(paroleProibite[i]);
 
-      testoIniziale = testoIniziale.replace(paroleProibite[i], testoSostitutivo);
-      testoIniziale = testoIniziale.replace(tuttaMinuscola, testoSostitutivo);
-      testoIniziale = testoIniziale.replace(conPrimaMaiuscola, testoSostitutivo);
+      //Processerà prima solo...
+      if (testoIniziale.includes(paroleProibite[i])){//la parola regolare
+        testoIniziale = testoIniziale.replace(paroleProibite[i], testoSostitutivo);
+      } else if (testoIniziale.includes(tuttaMinuscola)) {//la parola minuscola
+        testoIniziale = testoIniziale.replace(tuttaMinuscola, testoSostitutivo);
+      } else if (testoIniziale.includes(conPrimaMaiuscola)) {//la parola con prima lettera Maiuscola
+        testoIniziale = testoIniziale.replace(conPrimaMaiuscola, testoSostitutivo);
+      }
+
+      contatoreCensurate = contatoreCensurate + 1;
     }
   }
 
-  console.log('testo censurato ok');
+  document.writeln('<br>Parole censurate totali: ' + contatoreCensurate + '<br>Il testo censurato è:<br>' + testoIniziale);
+  console.log('testo censurato ok\nParole censurate ' + contatoreCensurate);
   return testoIniziale;
 }
 
